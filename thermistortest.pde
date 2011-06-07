@@ -1,4 +1,3 @@
-
 // which analog pin to connect
 #define THERMISTORPIN A0         
 // resistance at 25 degrees C
@@ -17,12 +16,14 @@ int samples[NUMSAMPLES];
 
 void setup(void) {
   Serial.begin(9600);
+  analogReference(EXTERNAL);
 }
 
 void loop(void) {
   uint8_t i;
   float average;
-  
+
+  // take N samples in a row, with a slight delay
   for (i=0; i< NUMSAMPLES; i++) {
    samples[i] = analogRead(THERMISTORPIN);
    delay(10);
@@ -30,17 +31,17 @@ void loop(void) {
   
   // average all the samples out
   average = 0;
-   for (i=0; i< NUMSAMPLES; i++) {
+  for (i=0; i< NUMSAMPLES; i++) {
      average += samples[i];
-   }
-   average /= NUMSAMPLES;
+  }
+  average /= NUMSAMPLES;
 
   Serial.print("Average analog reading "); 
   Serial.println(average);
+  
   // convert the value to resistance
-  average = 1023 / average;
-  average *= SERIESRESISTOR;
-  average -= SERIESRESISTOR;
+  average = 1023 / average - 1;
+  average = SERIESRESISTOR / average;
   Serial.print("Thermistor resistance "); 
   Serial.println(average);
   
