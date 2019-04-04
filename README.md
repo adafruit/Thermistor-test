@@ -1,6 +1,6 @@
 # Thermistor-test
 
-The code supporting the Adafruit Learning SYstem tutorial on Thermistors 
+The code supporting the Adafruit Learning System tutorial on Thermistors 
 https://learn.adafruit.com/thermistor/using-a-thermistor
 
 has been moved to
